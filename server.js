@@ -22,15 +22,19 @@ io.on('connection', socket => {
     socket.on('addTask', newTask => {
         tasks.push(newTask);
         socket.broadcast.emit('addTask', newTask)
+        console.log(tasks);
     });
 
-    socket.on('removeTask', () => {
+
+    socket.on('removeTask', id => {
         for (let outTask of tasks) {
-            if (outTask.task === socket.task) {
+            if (outTask.id === id) {
+                console.log(outTask.id);
+                console.log('jestem w petli');
 
                 tasks.splice(tasks.indexOf(outTask), 1);
 
-                socket.broadcast.emit('removeTask', tasks)
+                socket.broadcast.emit('removeTask', id)
             }
         }
     });
